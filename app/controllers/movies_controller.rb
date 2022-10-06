@@ -7,7 +7,7 @@ class MoviesController < ApplicationController
     if not session[:ratings].nil? and not session[:ratings].empty?
       @ratings_to_show = session[:ratings].keys
     else
-      @ratings_to_show = []
+      @ratings_to_show = Movie.all_ratings
     end
     @classes ={}
     if not session[:sort].nil?
@@ -30,11 +30,13 @@ class MoviesController < ApplicationController
     if params[:home]
       session[:sort] = params[:sort]
       session[:ratings] = params[:ratings]
+    else
+      redirect_to movies_path( :sort => session[:sort], :ratings => session[:ratings], :home => 1)
     end
     if not session[:ratings].nil? and not session[:ratings].empty?
       @ratings_to_show = session[:ratings].keys
     else
-      @ratings_to_show = []
+      @ratings_to_show = Movie.all_ratings
     end
     if not session[:sort].nil?
       @current_sort = session[:sort]
