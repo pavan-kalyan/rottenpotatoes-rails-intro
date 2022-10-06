@@ -5,6 +5,8 @@ class MoviesController < ApplicationController
   def setup
     @all_ratings = Movie.all_ratings
     @ratings_to_show = []
+    @classes ={}
+    @current_sort = ""
   end
   def show
     id = params[:id] # retrieve movie ID from URI route
@@ -13,11 +15,22 @@ class MoviesController < ApplicationController
   end
 
   def index
+    # puts params
+    session[:sort] = params[:sort]
     session[:ratings] = params[:ratings]
-    if not session[:ratings].nil?
+    if not session[:ratings].nil? and not session[:ratings].empty?
       @ratings_to_show = session[:ratings].keys
+    else
+      @ratings_to_show = []
     end
-    @movies = Movie.with_ratings(@ratings_to_show)
+    if not session[:sort].nil?
+      @current_sort = session[:sort]
+      @classes = {@current_sort => "hilite .text-warning bg-warning"}
+    else
+      # if not sort is applicable reset classes
+      @classes = {}
+    end
+    @movies = Movie.with_ratings(@ratings_to_show, @current_sort)
   end
 
   def new

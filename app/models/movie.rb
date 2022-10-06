@@ -3,10 +3,18 @@ class Movie < ActiveRecord::Base
   def self.all_ratings
     @@all_ratings
   end
-  def self.with_ratings(ratings)
-    if !ratings.nil?
-      return Movie.where(rating: ratings)
+  def self.with_ratings(ratings, order)
+    
+    if !ratings.nil? and !ratings.empty?
+      result = Movie.where(rating: ratings)
+    else
+      result = Movie.all
     end
-    return Movie.all
+
+    if !order.nil?
+      result = result.order(order)
+    end
+    return result
+
   end
 end
