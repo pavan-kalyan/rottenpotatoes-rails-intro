@@ -12,7 +12,7 @@ class MoviesController < ApplicationController
     @classes ={}
     if not session[:sort].nil?
       @current_sort = session[:sort]
-      @classes = {@current_sort => "hilite .text-warning bg-warning"}
+      @classes = {@current_sort => "hilite bg-warning"}
     else
       # if not sort is applicable reset classes
       @classes = {}
@@ -38,7 +38,7 @@ class MoviesController < ApplicationController
     end
     if not session[:sort].nil?
       @current_sort = session[:sort]
-      @classes = {@current_sort => "hilite .text-warning bg-warning"}
+      @classes = {@current_sort => "hilite bg-warning"}
     else
       # if not sort is applicable reset classes
       @classes = {}
